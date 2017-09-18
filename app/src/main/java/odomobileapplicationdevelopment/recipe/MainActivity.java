@@ -7,9 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,19 +43,21 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 */
 
+        mRecipes = new ArrayList<Recipe>();
         ListView recipeListView = (ListView) findViewById(R.id.Recipe_List_View);
         recipeAdapter = new RecipeAdapter(this, R.layout.recipe_list_item, mRecipes);
         recipeListView.setAdapter(recipeAdapter);
-/*        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
-//                Recipe recipe = recipeAdapter.getItem(position);
+                Recipe recipe = recipeAdapter.getItem(position);
 
-        //        Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
 
                 // TODO ; Add URL code
-                *//**//*
+/*
+
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(String.valueOf(recipe.getUrl()));
 
@@ -62,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
 
                 // Send the intent to launch a new activity
-                startActivity(websiteIntent);*//**//*
+                startActivity(websiteIntent);
+*/
             }
-        });*/
+        });
     }
 
     public void getRecipes(View view){
@@ -93,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUi(ArrayList<Recipe> r) {
-        TextView name = (TextView) findViewById(R.id.Recipe_Name);
-        TextView ingr = (TextView) findViewById(R.id.Ingredients);
+    private void updateUi() {
+        // Do nothing
+        Log.i(LOG_TAG,"UpdateUI Called");
 
-        name.setText(r.get(0).getmRecipeName());
-        ingr.setText(r.get(0).getmIngredients());
+        for(Recipe r: mRecipes){
+            Log.i(LOG_TAG,"name " + r.getmRecipeName());
+            Log.i(LOG_TAG,r.getmIngredients());
+        }
     }
 
     /*
@@ -134,7 +140,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Recipe> recipes) {
             super.onPostExecute(recipes);
 
-            updateUi((ArrayList<Recipe>) recipes);
+            if( recipes.isEmpty())
+                return;
+
+            mRecipes = (ArrayList)recipes;
+            updateUi();
         }
 
 
