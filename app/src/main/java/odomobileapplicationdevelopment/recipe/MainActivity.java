@@ -2,13 +2,13 @@ package odomobileapplicationdevelopment.recipe;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,22 +31,44 @@ public class MainActivity extends AppCompatActivity {
     private static String mURL = "http://www.recipepuppy.com/api/?i=&q=steak&p=5";
     private static String LOG_TAG = "RECIPE";
     ArrayList<Recipe> mRecipes;
+    private ArrayAdapter<Recipe> recipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+*/
+
+        ListView recipeListView = (ListView) findViewById(R.id.Recipe_List_View);
+        recipeAdapter = new RecipeAdapter(this, R.layout.recipe_list_item, mRecipes);
+        recipeListView.setAdapter(recipeAdapter);
+/*        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                RecipeAsyncTask task = new RecipeAsyncTask();
-                task.execute();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Find the current earthquake that was clicked on
+//                Recipe recipe = recipeAdapter.getItem(position);
+
+        //        Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
+
+                // TODO ; Add URL code
+                *//**//*
+                // Convert the String URL into a URI object (to pass into the Intent constructor)
+                Uri earthquakeUri = Uri.parse(String.valueOf(recipe.getUrl()));
+
+                // Create a new intent to view the earthquake URI
+                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+
+                // Send the intent to launch a new activity
+                startActivity(websiteIntent);*//**//*
             }
-        });
+        });*/
+    }
+
+    public void getRecipes(View view){
+        new RecipeAsyncTask().execute();
     }
 
     @Override
