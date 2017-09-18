@@ -1,14 +1,21 @@
 package odomobileapplicationdevelopment.recipe;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +34,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String mURL = "http://www.recipepuppy.com/api/?i=&q=steak&p=5";
+    private static final String mURLBase = "http://www.recipepuppy.com/api/?i=&q=";
+    private String mURL = "steak";
     private static String LOG_TAG = "RECIPE";
     ArrayList<Recipe> mRecipes = new ArrayList<Recipe>();
     ArrayAdapter<Recipe> mAdapter;
@@ -47,31 +55,50 @@ public class MainActivity extends AppCompatActivity {
 
         recipeListView.setAdapter(mAdapter);
 
-        /*        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
-                Recipe recipe = recipeAdapter.getItem(position);
+                Recipe recipe = mAdapter.getItem(position);
 
                 Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
 
-                *//*
-
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri earthquakeUri = Uri.parse(String.valueOf(recipe.getUrl()));
 
-                // Create a new intent to view the earthquake URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+                if( recipe.getmURL() != null ){
+                    Uri recipeUri = Uri.parse(String.valueOf(recipe.getmURL()));
 
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);
-*//*
+                    // Create a new intent to view the earthquake URI
+                    Intent websiteIntent = new Intent(Intent.ACTION_VIEW, recipeUri);
+
+                    // Send the intent to launch a new activity
+                    startActivity(websiteIntent);
+
+                }
             }
-        });*/
+        });
+    }
+
+    public void stealFocus(View view){
+        RelativeLayout thief = (RelativeLayout) findViewById(R.id.focus_thief);
+        thief.requestFocus();
     }
 
     public void getRecipes(View view){
-        new RecipeAsyncTask().execute();
+
+        EditText searchKey = (EditText) findViewById(R.id.search_edit_text_box);
+        String search = String.valueOf(searchKey.getText());
+
+        if( search.isEmpty() ){
+            Toast toast = Toast.makeText(this,"Please enter a valid search value; E.g. 'Steak'",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
+            toast.show();
+        }
+        else{
+            // build string
+            mURL = mURLBase + search;
+            new RecipeAsyncTask().execute();
+        }
     }
 
     @Override
@@ -96,27 +123,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUi() {
-        // Do nothing
-        Log.i(LOG_TAG,"UpdateUI Called");
-
-        for(Recipe r: mRecipes){
-            Log.i(LOG_TAG,"name " + r.getmRecipeName());
-            Log.i(LOG_TAG,r.getmIngredients());
-        }
-
-        for(Recipe r: mRecipes){
-
-        }
-    }
-
     /*
         URL and Async Code
      */
     private class RecipeAsyncTask extends AsyncTask<URL, Void, List<Recipe>> {
-
-        //private static String mURL = "http://www.recipepuppy.com/api/?i=&q=steak&p=5";
-        //private static String LOG_TAG = "RECIPE";
 
         @Override
         protected List<Recipe> doInBackground(URL... urls) {
@@ -145,13 +155,14 @@ public class MainActivity extends AppCompatActivity {
 
             mAdapter.clear();
 
-            if( recipes.isEmpty())
+            if( recipes.isEmpty()){
+                Toast toast = Toast.makeText(getApplicationContext(),"Search returned no results",Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
+                toast.show();
                 return;
-
+            }
             mAdapter.addAll(recipes);
-            updateUi();
         }
-
 
         private URL createUrl(String stringUrl) {
             URL url = null;
@@ -167,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Make an HTTP request to the given URL and return a String as the response.
          */
+
         private String makeHttpRequest(URL url) throws IOException {
             String jsonResponse = "";
             HttpURLConnection urlConnection = null;
@@ -226,7 +238,13 @@ public class MainActivity extends AppCompatActivity {
 
                     String name = recipe.getString("title");
                     String ingredients = recipe.getString("ingredients");
-                    recipes.add( new Recipe(name,ingredients) );
+                    String url = recipe.getString("href");
+                    if( url.isEmpty() ){
+                        recipes.add( new Recipe(name,ingredients) );
+                    } else{
+                        URL finalURL = createUrl(url);
+                        recipes.add(new Recipe(name, ingredients, finalURL));
+                    }
                 }
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);

@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/focus_thief"
+    android:focusedByDefault="true"
+    android:onClick="stealFocus"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_edit_text_box"
+        tools:text="Steak"
+        android:focusedByDefault="false"
+        android:hint="Recipe, e.g.: omelet or steak"
+        android:layout_margin="8dp"
+        />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:id="@+id/Recipe_List_View"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/search_edit_text_box"
         android:layout_above="@+id/fab"
         >
-
     </ListView>
 
     <android.support.design.widget.FloatingActionButton
