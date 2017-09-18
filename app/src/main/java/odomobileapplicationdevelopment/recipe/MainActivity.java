@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static String mURL = "http://www.recipepuppy.com/api/?i=&q=steak&p=5";
     private static String LOG_TAG = "RECIPE";
-    ArrayList<Recipe> mRecipes;
-    private ArrayAdapter<Recipe> recipeAdapter;
+    ArrayList<Recipe> mRecipes = new ArrayList<Recipe>();
+    ArrayAdapter<Recipe> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 */
 
-        mRecipes = new ArrayList<Recipe>();
         ListView recipeListView = (ListView) findViewById(R.id.Recipe_List_View);
-        recipeAdapter = new RecipeAdapter(this, R.layout.recipe_list_item, mRecipes);
-        recipeListView.setAdapter(recipeAdapter);
-        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        mAdapter = new RecipeAdapter(this, R.layout.recipe_list_item, mRecipes);
+
+        recipeListView.setAdapter(mAdapter);
+
+        /*        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
 
-                // TODO ; Add URL code
-/*
+                *//*
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(String.valueOf(recipe.getUrl()));
@@ -66,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Send the intent to launch a new activity
                 startActivity(websiteIntent);
-*/
+*//*
             }
-        });
+        });*/
     }
 
     public void getRecipes(View view){
@@ -105,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
             Log.i(LOG_TAG,"name " + r.getmRecipeName());
             Log.i(LOG_TAG,r.getmIngredients());
         }
+
+        for(Recipe r: mRecipes){
+
+        }
     }
 
     /*
@@ -140,10 +143,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Recipe> recipes) {
             super.onPostExecute(recipes);
 
+            mAdapter.clear();
+
             if( recipes.isEmpty())
                 return;
 
-            mRecipes = (ArrayList)recipes;
+            mAdapter.addAll(recipes);
             updateUi();
         }
 

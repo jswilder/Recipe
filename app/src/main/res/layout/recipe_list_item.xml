@@ -24,6 +24,8 @@
         android:id="@+id/Recipe_Name"
         android:textStyle="bold"
         android:layout_toRightOf="@+id/Recipe_Image"
+        android:text="Ocean"
+        android:textColor="@android:color/black"
         tools:text="Ocean"
         />
 
@@ -34,6 +36,8 @@
         android:textSize="16dp"
         android:layout_toRightOf="@+id/Recipe_Image"
         android:layout_below="@+id/Recipe_Name"
+        android:textColor="@android:color/black"
+        android:text="Water, salt"
         tools:text="Water, Salt, JellyFish"
         />
 
