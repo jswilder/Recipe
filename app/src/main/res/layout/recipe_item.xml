@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    android:layout_margin="4dp"
+    >
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="4dp"
+        android:id="@+id/Recipe_Image"
+        android:src="@drawable/burger"
+        tools:src="@drawable/burger"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:id="@+id/Recipe_Name"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/Recipe_Image"
+        tools:text="Ocean"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Ingredients"
+        android:textSize="16dp"
+        android:layout_toRightOf="@+id/Recipe_Image"
+        android:layout_below="@+id/Recipe_Name"
+        tools:text="Water, Salt, JellyFish"
+        />
+
+</RelativeLayout>
