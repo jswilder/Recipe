@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stealFocus(View view){
-        RelativeLayout thief = (RelativeLayout) findViewById(R.id.focus_thief);
+        LinearLayout thief = (LinearLayout) findViewById(R.id.focus_thief);
         thief.requestFocus();
     }
 
@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 jsonResponse = makeHttpRequest(url);
             } catch (IOException e) {
-                // TODO Handle the IOException
                 Log.e(LOG_TAG,"IOException in http request",e);
             }
 
