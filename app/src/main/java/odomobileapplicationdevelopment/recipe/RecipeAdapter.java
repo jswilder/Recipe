@@ -37,7 +37,16 @@ public class RecipeAdapter extends ArrayAdapter {
 
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        View view = layoutInflater.inflate(R.layout.recipe_list_item,null );
+        View view = null;
+
+        if( position == 0) {
+            view = layoutInflater.inflate(R.layout.recipe_list_item_special, null);
+            TextView special = (TextView) view.findViewById(R.id.specail_text_box);
+            special.setText("I'm Special!!");
+        }
+        else {
+            view = layoutInflater.inflate(R.layout.recipe_list_item, null);
+        }
 
         TextView recipeName = (TextView) view.findViewById(R.id.Recipe_Name);
         TextView recipeIngredients = (TextView) view.findViewById(R.id.Ingredients);
