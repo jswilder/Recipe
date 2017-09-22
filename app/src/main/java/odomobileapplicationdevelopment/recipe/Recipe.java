@@ -19,15 +19,23 @@ public class Recipe {
         mIngredients = "Salt, Water";
     }
 
-    Recipe(String name, String ingredients){
+    Recipe(String name, String ingredients, String img){
         mRecipeName = name;
         mIngredients = ingredients;
+        mJPG = img;
     }
 
     Recipe(String name, String ingredients, URL url){
         mRecipeName = name;
         mIngredients = ingredients;
         mURL = url;
+    }
+
+    Recipe(String name, String ingredients, URL url, String img){
+        mRecipeName = name;
+        mIngredients = ingredients;
+        mURL = url;
+        mJPG = img;
     }
 
 
@@ -45,5 +53,13 @@ public class Recipe {
 
     public void setmURL(URL mURL) {
         this.mURL = mURL;
+    }
+
+    public String getmJPG() {
+        return mJPG;
+    }
+
+    public void setmJPG(String mJPG) {
+        this.mJPG = mJPG;
     }
 }

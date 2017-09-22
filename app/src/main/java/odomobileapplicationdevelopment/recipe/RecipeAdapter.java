@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -41,8 +43,6 @@ public class RecipeAdapter extends ArrayAdapter {
 
         if( position == 0) {
             view = layoutInflater.inflate(R.layout.recipe_list_item_special, null);
-            TextView special = (TextView) view.findViewById(R.id.specail_text_box);
-            special.setText("I'm Special!!");
         }
         else {
             view = layoutInflater.inflate(R.layout.recipe_list_item, null);
@@ -50,11 +50,19 @@ public class RecipeAdapter extends ArrayAdapter {
 
         TextView recipeName = (TextView) view.findViewById(R.id.Recipe_Name);
         TextView recipeIngredients = (TextView) view.findViewById(R.id.Ingredients);
-        ImageView image = (ImageView) view.findViewById(R.id.Recipe_Image);
+
+        ImageView image = image = (ImageView) view.findViewById(R.id.Recipe_Image);
+
+        String imgURI = recipe.getmJPG();
+        if( imgURI.isEmpty() ){
+            image.setImageResource(R.drawable.burger); // If there isn't a link, dont try to retrieve thumbnail img
+        } else {
+            Picasso.with(getContext()).load(imgURI).fit().centerCrop().placeholder(R.drawable.burger)
+                    .error(R.drawable.burger).into(image);
+        }
 
         recipeIngredients.setText(String.valueOf( recipe.getmIngredients() ));
         recipeName.setText( String.valueOf(recipe.getmRecipeName()));
-        image.setImageResource(R.drawable.burger);
 
         return view;
     }

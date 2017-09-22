@@ -238,11 +238,11 @@ public class MainActivity extends AppCompatActivity {
                     String name = recipe.getString("title");
                     String ingredients = recipe.getString("ingredients");
                     String url = recipe.getString("href");
+                    String img = recipe.getString("thumbnail");
                     if( url.isEmpty() ){
-                        recipes.add( new Recipe(name,ingredients) );
+                        recipes.add( new Recipe(name,ingredients,img) );
                     } else{
-                        URL finalURL = createUrl(url);
-                        recipes.add(new Recipe(name, ingredients, finalURL));
+                        recipes.add(new Recipe(name, ingredients, createUrl(url), img));
                     }
                 }
             } catch (JSONException e) {

@@ -9,8 +9,8 @@
     >
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="4dp"
         android:id="@+id/Recipe_Image"
         android:src="@drawable/burger"
@@ -20,12 +20,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:id="@+id/Recipe_Name"
         android:textStyle="bold"
         android:layout_toRightOf="@+id/Recipe_Image"
         android:text="Ocean"
-        android:textColor="@android:color/holo_red_light"
+        android:textColor="@android:color/holo_blue_bright"
         tools:text="Ocean"
         />
 
@@ -38,18 +38,8 @@
         android:layout_below="@+id/Recipe_Name"
         android:textColor="@android:color/black"
         android:text="Water, salt"
+        android:textStyle="italic"
         tools:text="Water, Salt, JellyFish"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Ingredients"
-        android:id="@+id/specail_text_box"
-        android:layout_toRightOf="@id/Recipe_Image"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="20sp"
-        tools:text="Test Stuff"
         />
 
 </RelativeLayout>
