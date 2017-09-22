@@ -44,7 +44,12 @@ public class Recipe {
     }
 
     public String getmIngredients() {
-        return mIngredients;
+
+        if( mIngredients.length() > 60 ){
+            return mIngredients.substring(0,60) + "...";
+        } else {
+            return mIngredients;
+        }
     }
 
     public URL getmURL() {
