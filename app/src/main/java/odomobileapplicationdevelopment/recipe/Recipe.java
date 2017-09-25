@@ -38,7 +38,6 @@ public class Recipe {
         mJPG = img;
     }
 
-
     public String getmRecipeName() {
         return mRecipeName;
     }

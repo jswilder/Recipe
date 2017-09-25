@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         String search = String.valueOf(searchKey.getText());
 
         if( search.isEmpty() ){
-            Toast toast = Toast.makeText(this,"Please enter a valid search value; E.g. 'Steak'",Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this,"Please enter a valid search value; e.g. 'Steak'",Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
             toast.show();
         }
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (JSONException e) {
-                Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+                Log.e(LOG_TAG, "Problem parsing the recipe JSON results", e);
             }
             return recipes;
         }
