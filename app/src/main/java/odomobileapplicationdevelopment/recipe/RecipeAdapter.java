@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by j on 9/18/17.
@@ -53,12 +54,27 @@ public class RecipeAdapter extends ArrayAdapter {
 
         ImageView image = image = (ImageView) view.findViewById(R.id.Recipe_Image);
 
+
         String imgURI = recipe.getmJPG();
-        if( imgURI.isEmpty() ){
-            image.setImageResource(R.drawable.burger); // If there isn't a link, dont try to retrieve thumbnail img
+        if( imgURI.isEmpty() ){     // I got tired of seeing the same image so I pick randomly
+            int c = new Random().nextInt() % 4;
+            switch (c){
+                case 0:
+                    image.setImageResource(R.drawable.ingredients);
+                    break;
+                case 1:
+                    image.setImageResource(R.drawable.orange);
+                    break;
+                case 2:
+                    image.setImageResource(R.drawable.quesadilla);
+                    break;
+                case 3:
+                    image.setImageResource(R.drawable.steak);
+                    break;
+            }
         } else {
-            Picasso.with(getContext()).load(imgURI).fit().centerCrop().placeholder(R.drawable.burger)
-                    .error(R.drawable.burger).into(image);
+            Picasso.with(getContext()).load(imgURI).fit().centerCrop().placeholder(R.drawable.bento)
+                    .error(R.drawable.lemon).into(image);
         }
 
         recipeIngredients.setText(String.valueOf( recipe.getmIngredients() ));
