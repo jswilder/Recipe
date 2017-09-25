@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String mURLBase = "http://www.recipepuppy.com/api/?i=&q=";
     private String mURL = "steak";
     private static String LOG_TAG = "RECIPE";
+
     ArrayList<Recipe> mRecipes = new ArrayList<Recipe>();
     ArrayAdapter<Recipe> mAdapter;
 
@@ -56,26 +57,26 @@ public class MainActivity extends AppCompatActivity {
 
         recipeListView.setAdapter(mAdapter);
 
-                recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Find the current earthquake that was clicked on
-                Recipe recipe = mAdapter.getItem(position);
+            recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            // Find the current earthquake that was clicked on
+            Recipe recipe = mAdapter.getItem(position);
 
-                Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),recipe.getmRecipeName(),Toast.LENGTH_SHORT).show();
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
+            // Convert the String URL into a URI object (to pass into the Intent constructor)
 
-                if( recipe.getmURL() != null ){
-                    Uri recipeUri = Uri.parse(String.valueOf(recipe.getmURL()));
+            if( recipe.getmURL() != null ){
+                Uri recipeUri = Uri.parse(String.valueOf(recipe.getmURL()));
 
-                    // Create a new intent to view the earthquake URI
-                    Intent websiteIntent = new Intent(Intent.ACTION_VIEW, recipeUri);
+                // Create a new intent to view the earthquake URI
+                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, recipeUri);
 
-                    // Send the intent to launch a new activity
-                    startActivity(websiteIntent);
+                // Send the intent to launch a new activity
+                startActivity(websiteIntent);
 
-                }
+            }
             }
         });
     }
